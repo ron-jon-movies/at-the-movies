@@ -427,7 +427,7 @@ function updateMovie(e,index) {
 
     }
 
-    const editMovieInfo = fetch(`${url}/${index}`, {
+    const editMovieInfo = fetch(`${url}/${index[0]}`, {
 
         method: 'PUT',
         headers: {
@@ -462,7 +462,8 @@ function renderMovieCards(movie, parentContainer) {
                     <img class="card-img-top" src=${movie.poster} alt="Card image top">
                 </div>                
                 <div>                        
-                    <button class="card-btn" onclick="editForm(${movieList.indexOf(movie)})" id="edit">Edit</button><button class="card-btn delete-movie-btn" id="${movie.id}">Delete</button>
+                    <button class="card-btn edit-movie-btn" id="${movie.id}">Edit</button>
+                    <button class="card-btn delete-movie-btn" id="${movie.id}">Delete</button>
                 </div>
                          <input type="hidden" id="${movie.id}">
                 <div class="card-body">
@@ -514,6 +515,12 @@ $(document).ready(function () {
         deleteMovie($(this).attr("id"));
 
     });
+    $(document).on('click', '.edit-movie-btn', function (){
+        console.log($(this).attr("id"));
+        editForm($(this).attr("id"));
+
+    });
+
     $('#update-movie-btn ').hide()
 })
 });
