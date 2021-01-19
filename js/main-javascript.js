@@ -280,7 +280,7 @@ let movieList = [];
 
 
 
-    $.ajax("https://cotton-ivy-lantana.glitch.me/movies").done(function (data) {
+    // $.ajax("https://cotton-ivy-lantana.glitch.me/movies").done(function (data) {
     //     // alert("Loading");
     //
     //
@@ -397,6 +397,7 @@ function deleteMovie(id) {
         .then((response) => response.json()).then(movieFetchRequest)
         .catch(error => console.error(error)) /* handle errors */
 }
+// deleteMovie(6);
 
 
 // ************************************************************************
@@ -461,8 +462,9 @@ function renderMovieCards(movie, parentContainer) {
                     <img class="card-img-top" src=${movie.poster} alt="Card image top">
                 </div>                
                 <div>                        
-                    <button class="card-btn" onclick="editForm(${movieList.indexOf(movie)})" id="edit">Edit</button><button class="card-btn" onclick="deleteMovie(${movie.id})">Delete</button>
+                    <button class="card-btn" onclick="editForm(${movieList.indexOf(movie)})" id="edit">Edit</button><button class="card-btn delete-movie-btn" id="${movie.id}">Delete</button>
                 </div>
+                         <input type="hidden" id="${movie.id}">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
@@ -487,6 +489,7 @@ function renderMovieCards(movie, parentContainer) {
 function editForm(index) {
     $("#add-movie-btn").hide();
     $("#update-movie-btn").show();
+    // $("#delete-movie-btn").hide();
     let movie = movieList[index];
 
     $('#movie-title').val(movie.title);
@@ -501,11 +504,16 @@ function editForm(index) {
 };
 
 
-// $(document).ready(function () {
+$(document).ready(function () {
     movieFetchRequest();
+    console.log("document loaded");
     $('#add-movie-btn').on('click', addMovie);
+    // $('#delete-movie-btn').on('click', deleteMovie());
+    $(document).on('click', '.delete-movie-btn', function (){
+        console.log($(this).attr("id"));
+        deleteMovie($(this).attr("id"));
+
+    });
     $('#update-movie-btn ').hide()
-
 })
-
 });
