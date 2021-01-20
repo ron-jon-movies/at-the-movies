@@ -427,7 +427,7 @@ function updateMovie(e,index) {
 
     }
 
-    const editMovieInfo = fetch(`${url}/${index[0]}`, {
+    const editMovieInfo = fetch(`${url}/${index}`, {
 
         method: 'PUT',
         headers: {
@@ -436,7 +436,7 @@ function updateMovie(e,index) {
 
         body: JSON.stringify(a)
     }).then((response) => response.json())
-        .then(movieFetchRequest).then(c=> {
+        .then(movieFetchRequest).then(a=> {
             $('#add-movie-btn ').show();
             $('#update-movie-btn ').hide()
         })
@@ -462,7 +462,7 @@ function renderMovieCards(movie, parentContainer) {
                     <img class="card-img-top" src=${movie.poster} alt="Card image top">
                 </div>                
                 <div>                        
-                    <button class="card-btn edit-movie-btn" id="${movie.id}">Edit</button>
+                    <button class="card-btn edit-movie-btn" id="${movie.id - 1}">Edit</button>
                     <button class="card-btn delete-movie-btn" id="${movie.id}">Delete</button>
                 </div>
                          <input type="hidden" id="${movie.id}">
@@ -488,10 +488,10 @@ function renderMovieCards(movie, parentContainer) {
 }
 
 function editForm(index) {
+    let movie = movieList[index];
     $("#add-movie-btn").hide();
     $("#update-movie-btn").show();
     // $("#delete-movie-btn").hide();
-    let movie = movieList[index];
 
     $('#movie-title').val(movie.title);
     $('#movie-genre').val(movie.genre);
